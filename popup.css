@@ -1,0 +1,62 @@
+popup {
+    height: 30px;
+    width: 30px;
+    outline: none;
+    margin: 10px;
+    border: none;
+    border-radius: 2px;
+}
+
+    popup.current {
+        box-shadow: 0 0 0 2px white, 0 0 0 4px black;
+    }
+
+form {
+    background-color: #4654e1;
+    width: 500px;
+    height: 44px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    color: #eee !important;
+    line-height: 1.625 !important;
+    background-color: #333 !important;
+    cursor: auto !important;
+    margin-top: 10px;
+}
+
+input {
+    all: unset;
+    font: 16px system-ui;
+    color: #fff;
+    width:86%;
+    padding-right: -10px;
+    padding-left: 10px;
+}
+
+::placeholder {
+    color: #fff;
+    opacity: 0.7;
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+    border: 2px solid;
+    color: #eee;
+    fill: darkgrey;
+    background-color: grey;
+    padding: 3px;
+    border-radius: 6px;
+    border-color: dimgrey;
+}
+
+.background {
+    font-size: 20px;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    text-align: center;
+}

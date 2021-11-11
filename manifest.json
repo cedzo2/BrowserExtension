@@ -1,0 +1,10 @@
+{
+  "name": "Web Page Information Retrieval and Link Brwosing",
+  "description": "Indexes the current page, scrapes the page for hyperlinks and recommends sections and links from the page that may be relevant to the query",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [ "storage" ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
