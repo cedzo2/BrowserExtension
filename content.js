@@ -4,16 +4,53 @@ chrome.runtime.onMessage.addListener(
         if (request.method == "changePage") {
             var arr = [], l = document.links;
             let short = Array.from(l)
-            short = short.slice(0, 8)
-            scrape(short)
+            short = short.slice(0, 40)
+            scrape(short).then(outputs => {
+                let query = request.msg
+                let score = []
+                 // BM25
+                let bm = new BM25;
+                // Add each document and corresponding document ID.
+                for (let i = 0; i < outputs.length; i++) {
+                    bm.addDocument({id: outputs[i].url, body: outputs[i].webpage})
+                }
+                // Update IDF.
+                bm.updateIdf();
+                for (let i = 0; i < outputs.length; i++) {
+                    if (bm.search(query)[i]){
+                        let obj = {
+                            url: bm.search(query)[i]["id"],
+                            score: bm.search(query)[i]["_score"]
+                        }
+                        score.push(obj)
+                    }
+                }
+
+                score.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+
+                alert(JSON.stringify(score))
+
+                // Find best match for "water". Documents with score of 0 are excluded.
+                // Keys: id, tokens, body, termCount, terms, _score
+                // alert(bm.search(query)[0]["body"])
+                // alert(bm.search(query)[0]["_score"])
+                // alert(bm.search(query)[1]["body"])
+                // alert(bm.search(query)[1]["_score"])
+                //// End BM25 ////
+            })
+            
 
             async function scrape(array) {
                 let outputs = [];
                 await asyncForEach(array, async (u) => {
-                outputs.push(await generate(u))
+                    let back = await generate(u)
+                    if(back && outputs.indexOf(back) === -1){
+                       outputs.push(back)  
+                    }
+                
             });
                 // results here
-                alert(outputs.length)
+                return outputs
             }
 
             async function asyncForEach(array, callback) {
@@ -29,7 +66,6 @@ chrome.runtime.onMessage.addListener(
 
             async function open_url(url) {
               if(url.startsWith("https://en.m.wikipedia.org/wiki/") && !url.endsWith(".jpg")){
-                    arr.push(url)
                     const response = await fetch(url,
                         {
                             method: 'get',
@@ -47,7 +83,11 @@ chrome.runtime.onMessage.addListener(
                             body = String(body).replace(/<style.*?<\/style>/g, '')
                             // remove html tags 
                             const result = body.replace(/(<([^>]+)>)/gi, "").replace(/(^[ \t]*\n)/gm, "")
-                            return result
+                            const obj = {
+                                url: url,
+                                webpage: result
+                            }
+                            return obj
                         }
                       }
               }
