@@ -16,6 +16,28 @@ chrome.runtime.onMessage.addListener(
                 alert(outputs.length)
             }
 
+            //// Start BM25 ////
+            // BM25
+            var bm = new BM25;
+
+            // Create some sample docs.
+            let _outputs = ["water water water", "loo loo loo", "water loo"]
+
+            // Add each document and corresponding document ID.
+            for (let i = 0; i < _outputs.length; i++) {
+                bm.addDocument({id: i, body: _outputs[i]})
+            }
+
+            // Update IDF.
+            bm.updateIdf();
+
+            // Find best match for "water". Documents with score of 0 are excluded.
+            // Keys: id, tokens, body, termCount, terms, _score
+            alert(bm.search("water")[0]["body"])
+            alert(bm.search("water")[1]["body"])
+            alert(bm.search("water")[2]["body"])
+            //// End BM25 ////
+
             async function asyncForEach(array, callback) {
                 for (let index = 0; index < array.length; index++) {
                   await callback(array[index], index, array)
