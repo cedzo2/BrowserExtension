@@ -7,25 +7,15 @@ chrome.runtime.onMessage.addListener(
             short = short.slice(0, 8)
             scrape(short)
 
-            async function scrape(array) {
-                let outputs = [];
-                await asyncForEach(array, async (u) => {
-                outputs.push(await generate(u))
-            });
-                // results here
-                alert(outputs.length)
-            }
-
-            //// Start BM25 ////
             // BM25
             var bm = new BM25;
 
-            // Create some sample docs.
-            let _outputs = ["water water water", "loo loo loo", "water loo"]
+            // Some sample documents.
+            let outputs = ["water water water", "loo loo loo", "water loo"]
 
             // Add each document and corresponding document ID.
-            for (let i = 0; i < _outputs.length; i++) {
-                bm.addDocument({id: i, body: _outputs[i]})
+            for (let i = 0; i < outputs.length; i++) {
+                bm.addDocument({id: i, body: outputs[i]})
             }
 
             // Update IDF.
@@ -34,9 +24,19 @@ chrome.runtime.onMessage.addListener(
             // Find best match for "water". Documents with score of 0 are excluded.
             // Keys: id, tokens, body, termCount, terms, _score
             alert(bm.search("water")[0]["body"])
+            alert(bm.search("water")[0]["_score"])
             alert(bm.search("water")[1]["body"])
-            alert(bm.search("water")[2]["body"])
+            alert(bm.search("water")[1]["_score"])
             //// End BM25 ////
+
+            async function scrape(array) {
+                let outputs = [];
+                await asyncForEach(array, async (u) => {
+                outputs.push(await generate(u))
+            });
+                // results here
+                // alert(outputs.length)
+            }
 
             async function asyncForEach(array, callback) {
                 for (let index = 0; index < array.length; index++) {
