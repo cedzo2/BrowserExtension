@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     links = JSON.parse(response.text);
                 }
                 alert(links.join('\r\n'))
-
             });
         });
     }, false);
