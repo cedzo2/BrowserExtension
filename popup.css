@@ -12,7 +12,6 @@ popup {
     }
 
 form {
-    background-color: #4654e1;
     width: 500px;
     height: 44px;
     border-radius: 5px;
@@ -23,18 +22,20 @@ form {
     font-weight: 300 !important;
     color: #eee !important;
     line-height: 1.625 !important;
-    background-color: #333 !important;
+    background-color: #fff !important;
     cursor: auto !important;
     margin-top: 10px;
+    border: #777 1.5px solid;
 }
 
 input {
     all: unset;
     font: 16px system-ui;
-    color: #fff;
+    color: #777;
     width:86%;
     padding-right: -10px;
     padding-left: 10px;
+    font-weight: bold;
 }
 
 ::placeholder {
@@ -42,21 +43,28 @@ input {
     opacity: 0.7;
 }
 
+
 button {
     all: unset;
     cursor: pointer;
-    border: 2px solid;
-    color: #eee;
+    color: #fff;
     fill: darkgrey;
-    background-color: grey;
-    padding: 3px;
-    border-radius: 6px;
-    border-color: dimgrey;
+    background-color: #777;
+    border-radius: 2px;
+    width: 103px;
+    height:  103%;
+    margin-top: -1px;
+    text-align: center;
+}
+
+button:hover{
+    background-color: #000;
 }
 
 .background {
-    font-size: 20px;
-    border-bottom: 3px solid black;
+    font-size: 17px;
     padding-bottom: 10px;
+    padding-top: 5px;
     text-align: center;
+    font-family: helvetica;
 }

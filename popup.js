@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.method == "changePage") {
                     links = JSON.parse(response.text);
                 }
-                alert(links.join('\r\n'))
+                // alert(links.join('\r\n'))
             });
         });
     }, false);
